@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import * as moment from 'moment'; 
-
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-tab2',
@@ -12,22 +12,29 @@ export class Tab2Page {
   public transplantingDate = '';
   public harvestDate = '';
   public disableSaveButton = true;
+  private storage: LocalStorageService | null = null;
   entries: any[] = [];
   
 
-  constructor() {
-    const entries = localStorage.getItem('lettuceEntries');
-    if (entries) {
-      this.entries = JSON.parse(entries);
-    }
+  constructor(private localStorageService: LocalStorageService) {
+    // const entries = localStorage.getItem('lettuceEntries');
+    
+    
   }
 
   ngOnInit() {
     // Load entries from localStorage on page load
-    const storedEntries = localStorage.getItem('lettuceEntries');
-    if (storedEntries) {
-      this.entries = JSON.parse(storedEntries);
-    }
+    const entries = this.localStorageService.get('lettuceEntries')?.then((entries) => { 
+      console.log("loaded entries");
+      // console.log(entries)
+      if (entries) {
+        this.entries = JSON.parse(entries);
+      }
+    });
+    // const storedEntries = localStorage.getItem('lettuceEntries');
+    // if (storedEntries) {
+    //   this.entries = JSON.parse(storedEntries);
+    // }
     // this.calculateDates();
   }
 
@@ -45,13 +52,20 @@ export class Tab2Page {
       harvestDate: this.harvestDate,
     };
     this.entries.unshift(entry);
-    localStorage.setItem('lettuceEntries', JSON.stringify(this.entries));
+    // this.localStorageService.set('lettuceEntries', JSON.stringify(this.entries))
+    this.localStorageService.set('lettuceEntries', JSON.stringify(this.entries)).then(() => {
+      console.log('Entries saved');
+    });
+    // localStorage.setItem('lettuceEntries', JSON.stringify(this.entries));
     this.resetFields();
   }
 
   deleteEntry(index: number) {
     this.entries.splice(index, 1);
-    localStorage.setItem('lettuceEntries', JSON.stringify(this.entries));
+    // localStorage.setItem('lettuceEntries', JSON.stringify(this.entries));
+    this.localStorageService.set('lettuceEntries', JSON.stringify(this.entries)).then(() => {
+      console.log('Entry deleted');
+    });
   }
 
   resetFields() {

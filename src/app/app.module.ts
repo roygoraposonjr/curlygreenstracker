@@ -12,6 +12,7 @@ import { Drivers, Storage } from '@ionic/storage';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,IonicStorageModule.forRoot({
+    name: 'CurlyGreensTracker',
     driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB,Drivers.LocalStorage]
   }), ServiceWorkerModule.register('ngsw-worker.js', {
   enabled: !isDevMode(),
