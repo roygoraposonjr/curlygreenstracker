@@ -8,7 +8,7 @@ import * as moment from 'moment';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-  public sowingDate = '';
+  public sowingDate =  moment().format('YYYY-MM-DD');
   public transplantingDate = '';
   public harvestDate = '';
   public disableSaveButton = true;
@@ -28,6 +28,7 @@ export class Tab2Page {
     if (storedEntries) {
       this.entries = JSON.parse(storedEntries);
     }
+    // this.calculateDates();
   }
 
   calculateDates() {
@@ -43,7 +44,7 @@ export class Tab2Page {
       transplantingDate: this.transplantingDate,
       harvestDate: this.harvestDate,
     };
-    this.entries.push(entry);
+    this.entries.unshift(entry);
     localStorage.setItem('lettuceEntries', JSON.stringify(this.entries));
     this.resetFields();
   }

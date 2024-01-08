@@ -19,20 +19,20 @@
         <ion-card-title>Sowing Date</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-list>
-          <ion-item>
-            <ion-datetime [showDefaultTitle]="true"
+
+            <ion-datetime [showDefaultTitle]="true"  mode="md"
+                presentation="date"
               (ionChange)="calculateDates()"
               [(ngModel)]="sowingDate"
-              display-format="MMM D, YYYY"
-              picker-format="MMM D, YYYY"
+              displayFormat="YYYY-MM-DD"
             >
-            <span slot="title">Select Date</span>
+            <span slot="title">Select Sowing Date</span>
           </ion-datetime>
-          </ion-item>
           
           
           <ion-list>
+
+          </ion-list>
             <ion-item>
               <ion-label>Transplanting Date: {{transplantingDate}}</ion-label>
               
@@ -43,18 +43,22 @@
               
             </ion-item>
 
-          </ion-list>
-          
-        </ion-list>
-        <!-- <ion-button expand="full" (click)="calculateDates()">Calculate Dates</ion-button> -->
-  <ion-button expand="full" (click)="saveEntry()"  disabled="{{disableSaveButton}}">Save Entry</ion-button>
+                  <!-- <ion-button expand="full" (click)="calculateDates()">Calculate Dates</ion-button> -->
+            <ion-button expand="full" (click)="saveEntry()"  disabled="{{disableSaveButton}}">Save Entry</ion-button>
+
+       
 
       </ion-card-content>
       
 
     </ion-card>
      
- 
+    <!-- <ion-row>
+     
+      <ion-col>
+        <ion-button expand="full" (click)="saveEntry()" disabled="{{disableSaveButton}}">Save Entry</ion-button>
+      </ion-col>
+    </ion-row> -->
 
   <ion-list [inset]="true"  lines="inset" mode="ios">
     <ion-list-header>
