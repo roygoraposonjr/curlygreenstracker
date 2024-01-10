@@ -25,6 +25,8 @@
               (ionChange)="calculateDates()"
               [(ngModel)]="sowingDate"
               displayFormat="YYYY-MM-DD"
+
+              [highlightedDates]="highlightedDates"
             >
             <span slot="title">Select Sowing Date</span>
           </ion-datetime>

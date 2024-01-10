@@ -13,6 +13,13 @@ export class Tab2Page {
   public fullStrengthDate = '';
   public harvestDate = '';
   public disableSaveButton = true;
+  public highlightedDates: any[] = [];
+
+  private dateColors = {
+    textColor: 'var(--ion-color-success-contrast)',
+    backgroundColor: 'var(--ion-color-success)',
+  };
+  
   private storage: LocalStorageService | null = null;
   entries: any[] = [];
   
@@ -30,6 +37,7 @@ export class Tab2Page {
       // console.log(entries)
       if (entries) {
         this.entries = JSON.parse(entries);
+        this.updateHighlightedDates();
       }
     });
     // const storedEntries = localStorage.getItem('lettuceEntries');
@@ -37,6 +45,21 @@ export class Tab2Page {
     //   this.entries = JSON.parse(storedEntries);
     // }
     // this.calculateDates();
+  }
+
+  updateHighlightedDates(){
+    var highlights: any[] = [];
+    this.entries.forEach(element => {
+      
+      highlights.push({
+        date: element.sowingDate,
+        textColor:  this.dateColors['textColor'],
+        backgroundColor: this.dateColors['backgroundColor'],
+      });
+      
+    });
+    this.highlightedDates = highlights;
+
   }
 
   calculateDates() {
@@ -59,6 +82,7 @@ export class Tab2Page {
     // this.localStorageService.set('lettuceEntries', JSON.stringify(this.entries))
     this.localStorageService.set('lettuceEntries', JSON.stringify(this.entries)).then(() => {
       console.log('Entries saved');
+      this.updateHighlightedDates();
     });
     // localStorage.setItem('lettuceEntries', JSON.stringify(this.entries));
     this.resetFields();
@@ -69,6 +93,7 @@ export class Tab2Page {
     // localStorage.setItem('lettuceEntries', JSON.stringify(this.entries));
     this.localStorageService.set('lettuceEntries', JSON.stringify(this.entries)).then(() => {
       console.log('Entry deleted');
+      this.updateHighlightedDates();
     });
   }
 
