@@ -10,6 +10,7 @@ import { LocalStorageService } from '../services/local-storage.service';
 export class Tab2Page {
   public sowingDate =  moment().format('YYYY-MM-DD');
   public transplantingDate = '';
+  public fullStrengthDate = '';
   public harvestDate = '';
   public disableSaveButton = true;
   private storage: LocalStorageService | null = null;
@@ -40,14 +41,17 @@ export class Tab2Page {
 
   calculateDates() {
     const selectedDate = moment(this.sowingDate);
-    this.transplantingDate = selectedDate.add(15, 'days').format('YYYY-MM-DD');
-    this.harvestDate = selectedDate.add(30, 'days').format('YYYY-MM-DD');
+    
+    this.fullStrengthDate = selectedDate.add(4, 'days').format('YYYY-MM-DD');
+    this.transplantingDate = selectedDate.add(9, 'days').format('YYYY-MM-DD');
+    this.harvestDate = selectedDate.add(32, 'days').format('YYYY-MM-DD');
     this.disableSaveButton = false;
   }
 
   saveEntry() {
     const entry = {
       sowingDate: this.sowingDate,
+      fullStrengthDate: this.fullStrengthDate,
       transplantingDate: this.transplantingDate,
       harvestDate: this.harvestDate,
     };
